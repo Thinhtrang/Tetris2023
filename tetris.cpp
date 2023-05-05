@@ -332,7 +332,7 @@ void XepGach :: setDiem( TextObject txt)
     strMark += val_str_mark;
     txt.setText(strMark);
     txt.loadFromRenderText(ScoreFont,gRenderer);
-    txt.RenderText(gRenderer,160,15);
+    txt.RenderText(gRenderer,220,100);
 }
 void XepGach :: updateRender()
 {
@@ -366,7 +366,7 @@ void XepGach :: updateRender()
     SetViTri(RectVien[1],90,15,80,80);
     SDL_RenderCopy(gRenderer,vien,NULL,&RectVien[1]);
     SDL_RenderCopy(gRenderer,vien,NULL,&RectVien[0]);
-    
+
     SDL_RenderPresent(gRenderer);
 }
 void XepGach :: Huy()
