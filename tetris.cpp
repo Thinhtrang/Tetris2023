@@ -31,12 +31,18 @@ int XepGach :: Menu()
         hinhnen1 = SDL_CreateTextureFromSurface(gRenderer, loadSurf);
         SDL_FreeSurface(loadSurf);
 	}
+    if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,2048)>= 0)
+    {
+        AmThanhMenu = Mix_LoadMUS("audio/backgroundMusic.wav");
+        MouseClick = Mix_LoadWAV("audio/mouseclick.wav");
+        Mix_PlayMusic(AmThanhMenu,-1);
+
+    }
 	if(TTF_Init() != -1)
     {
         menu_font = TTF_OpenFont("font/VHMUSTI.TTF",24);
     }
 	SDL_RenderCopy(gRenderer,hinhnen1,NULL, NULL);
-
 
     const int kMenuItemNum = 2;
     SDL_Rect pos_arr[2];
@@ -97,10 +103,12 @@ int XepGach :: Menu()
                 case SDL_MOUSEBUTTONDOWN:
                     xm = menu_e.button.x;
                     ym = menu_e.button.y;
+                    Mix_PlayChannel(-1,MouseClick,0);
                     for(int i = 0; i < kMenuItemNum; i++)
                     {
                         if(CheckFocusWithRect(xm,ym,pos_arr[i]))
                         {
+                            SDL_Delay(2000);
                             return i+1;
                         }
                     }
@@ -167,8 +175,11 @@ bool XepGach :: KhoiTao()
                 {
                     AmThanhNen = Mix_LoadMUS("audio/Tetris.wav");
                     XoaHang = Mix_LoadWAV("audio/clear.wav");
-                    DiChuyenTraiPhai = Mix_LoadWAV("audio/movenrotate.wav");
+                    DiChuyenTraiPhai = Mix_LoadWAV("audio/move2.wav");
+                    Rotate = Mix_LoadWAV("audio/rotate.wav");
                     GameOver = Mix_LoadWAV("audio/gameover.wav");
+                    GoDown = Mix_LoadWAV("audio/drop.wav");
+                    HardDrop = Mix_LoadWAV("audio/harddrop.wav");
                     Mix_PlayMusic(AmThanhNen,-1);
                 }
                 if(TTF_Init() != -1)
@@ -217,7 +228,7 @@ void XepGach :: XuLiSuKien()
             case SDLK_ESCAPE:
                 Chay= false;
 			case SDLK_UP:
-			    Mix_PlayChannel(-1,DiChuyenTraiPhai,0);
+			    Mix_PlayChannel(-1,Rotate,0);
 				LatNguoc = true;
 				break;
 			case SDLK_LEFT:
@@ -245,8 +256,13 @@ void XepGach :: XuLiSuKien()
         if (state[SDL_SCANCODE_DOWN])
         {
             delay = 50;
+            Mix_PlayChannel(-1,GoDown,0);
         }
-        if(state[SDL_SCANCODE_SPACE]) delay = 10;
+        if(state[SDL_SCANCODE_SPACE])
+        {
+            Mix_PlayChannel(-1,HardDrop,0);
+            delay = 10;
+        }
 }
 void XepGach :: SetViTri(SDL_Rect& rect, int x, int y, int w, int h)
 {
@@ -372,26 +388,33 @@ void XepGach :: updateRender()
 void XepGach :: Huy()
 {
     Mix_FreeMusic(AmThanhNen);
+    Mix_FreeMusic(AmThanhMenu);
     Mix_FreeChunk(XoaHang);
     Mix_FreeChunk(DiChuyenTraiPhai);
     Mix_FreeChunk(GameOver);
     Mix_FreeChunk(GoDown);
+     Mix_FreeChunk(HardDrop);
+    Mix_FreeChunk(MouseClick);
+    Mix_FreeChunk(Rotate);
     TTF_CloseFont(ScoreFont);
 
     score_.Free();
-
+    AmThanhMenu = NULL;
     DiChuyenTraiPhai = NULL;
     XoaHang = NULL;
     AmThanhNen = NULL;
     GameOver = NULL;
     GoDown = NULL;
+     HardDrop = NULL;
+    MouseClick = NULL;
+    Rotate = NULL;
     ScoreFont = NULL;
 
     SDL_DestroyTexture(cucgach);
 	SDL_DestroyTexture(hinhnen);
+    SDL_DestroyTexture(hinhnen1);
 	SDL_DestroyTexture(vien);
 	SDL_DestroyRenderer(gRenderer);
-
 
 	TTF_Quit();
 	Mix_Quit();

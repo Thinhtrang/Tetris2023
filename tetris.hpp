@@ -22,7 +22,6 @@ public:
     bool check();
 	bool KhoiTao();
 	void CucGachTiepTheo();
-	void displayCucGachTiepTheo();
 	void XuLiSuKien();
 	void SetViTri(SDL_Rect& rect, int x = 0, int y = 0, int w = 18, int h = 18);
 	void DiChuyenRect(SDL_Rect& rect, int x, int y);
@@ -56,10 +55,14 @@ private:
     SDL_Texture* vien = NULL;
 
     Mix_Music* AmThanhNen = NULL;
+    Mix_Music* AmThanhMenu = NULL;
     Mix_Chunk* XoaHang = NULL;
     Mix_Chunk* DiChuyenTraiPhai = NULL;
     Mix_Chunk* GameOver = NULL;
     Mix_Chunk* GoDown = NULL;
+    Mix_Chunk* MouseClick = NULL;
+    Mix_Chunk* HardDrop = NULL;
+    Mix_Chunk* Rotate = NULL;
 
     TTF_Font* ScoreFont = NULL;
     TTF_Font* menu_font = NULL;
@@ -75,25 +78,14 @@ private:
     };
     SDL_Rect srcR = { 0, 0, 18, 18};
     SDL_Rect destR = {0, 0, 18, 18};
-    SDL_Rect srcR1 ;
-    SDL_Rect destR1 ;
     int DiChuyen = 0;
     bool LatNguoc = false;
     bool Chay = false;
     Uint32 StartTime = 0, currentTime = 0;
     int colorNum = 0;
- //   int Max_delay = 500;
     int delay = 500;
     int n;
     int mark_value;
-
-
- //   int ks = 1;
-//    std::string str_val;
-//    SDL_Color color_text;
-//    SDL_Texture* texture_;
-//    int width_;
-//    int height_;
 };
 
 
