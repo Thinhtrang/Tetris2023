@@ -40,15 +40,8 @@ int XepGach :: Menu()
 
     const int kMenuItemNum = 2;
     SDL_Rect pos_arr[2];
-    pos_arr[0].x = 100;
-    pos_arr[0].y = 330;
-    pos_arr[0].w = 140;
-    pos_arr[0].h = 30;
-
-    pos_arr[1].x = 100;
-    pos_arr[1].y = 360;
-    pos_arr[1].w = 50;
-    pos_arr[1].h = 30;
+    SetViTri(pos_arr[0],100,330,140,30);
+    SetViTri(pos_arr[1],100,360,50,30);
 
     TextObject text_menu[kMenuItemNum];
     string s1 = "PLAY GAME";
@@ -149,10 +142,8 @@ bool XepGach :: KhoiTao()
 	if (SDL_Init(SDL_INIT_EVERYTHING |SDL_INIT_AUDIO) == 0)
 	{
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-		//gWindow = SDL_CreateWindow("XEP GACH NAO!",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,SCREEN_WIDTH,SCREEN_HEIGHT,SDL_WINDOW_SHOWN);
 		if (gWindow != NULL)
 		{
-			//gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 			if (gRenderer != NULL)
 			{
 
@@ -174,7 +165,7 @@ bool XepGach :: KhoiTao()
 
                 if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,2048)>= 0)
                 {
-                    AmThanhNen = Mix_LoadMUS("audio/src_assets_tetris.wav");
+                    AmThanhNen = Mix_LoadMUS("audio/Tetris.wav");
                     XoaHang = Mix_LoadWAV("audio/clear.wav");
                     DiChuyenTraiPhai = Mix_LoadWAV("audio/movenrotate.wav");
                     GameOver = Mix_LoadWAV("audio/gameover.wav");
@@ -182,7 +173,7 @@ bool XepGach :: KhoiTao()
                 }
                 if(TTF_Init() != -1)
                 {
-                    ScoreFont = TTF_OpenFont("font/VHMUSTI.TTF",18);
+                    ScoreFont = TTF_OpenFont("font/VHMUSTI.TTF",14);
                 }
                 CucGachTiepTheo();
 			}
@@ -368,12 +359,14 @@ void XepGach :: updateRender()
         SDL_RenderCopy(gRenderer, cucgach, &srcR, &destR);
     }
 
-    //setDiem(score_);
-    //score_.Free();
+    setDiem(score_);
 
-    SDL_Rect RectVien;
-    SetViTri(RectVien,15,15,80,80);
-    SDL_RenderCopy(gRenderer,vien,NULL,&RectVien);
+    SDL_Rect RectVien[2];
+    SetViTri(RectVien[0],15,15,80,80);
+    SetViTri(RectVien[1],90,15,80,80);
+    SDL_RenderCopy(gRenderer,vien,NULL,&RectVien[1]);
+    SDL_RenderCopy(gRenderer,vien,NULL,&RectVien[0]);
+    
     SDL_RenderPresent(gRenderer);
 }
 void XepGach :: Huy()
