@@ -170,6 +170,9 @@ bool XepGach :: KhoiTao()
                 loadSurf = IMG_Load("images/add.png");
                 vien = SDL_CreateTextureFromSurface(gRenderer,loadSurf);
                 SDL_FreeSurface(loadSurf);
+                loadSurf = IMG_Load("images/Finish2.png");
+                go_img = SDL_CreateTextureFromSurface(gRenderer,loadSurf);
+                SDL_FreeSurface(loadSurf);
 
                 if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,2048)>= 0)
                 {
@@ -331,6 +334,10 @@ void XepGach :: logicGame()
     for(int i = 0; i < Cols; i++)
     if(playingField[1][i])
     {
+        SDL_Rect Game_over;
+        SetViTri(Game_over,SCREEN_WIDTH/4,SCREEN_HEIGHT/4,160,160);
+        SDL_RenderCopy(gRenderer,go_img,NULL,&Game_over);
+        SDL_RenderPresent(gRenderer);
         Mix_PauseMusic();
         Mix_PlayChannel(-1,GameOver,0);
         SDL_Delay(2000);
@@ -413,6 +420,7 @@ void XepGach :: Huy()
     SDL_DestroyTexture(cucgach);
 	SDL_DestroyTexture(hinhnen);
     SDL_DestroyTexture(hinhnen1);
+    SDL_DestroyTexture(go_img);
 	SDL_DestroyTexture(vien);
 	SDL_DestroyRenderer(gRenderer);
 

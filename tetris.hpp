@@ -53,7 +53,8 @@ private:
     SDL_Texture* hinhnen = NULL;
     SDL_Texture* hinhnen1 = NULL;
     SDL_Texture* vien = NULL;
-
+    SDL_Texture* go_img = NULL;
+    
     Mix_Music* AmThanhNen = NULL;
     Mix_Music* AmThanhMenu = NULL;
     Mix_Chunk* XoaHang = NULL;
