@@ -331,29 +331,30 @@ void XepGach :: logicGame()
             mark_value += 100;
         }
     }
+    if(mark_value >= 300 * i)
+    {
+        i++;
+        Delay_Max -= 50;
+    }
     for(int i = 0; i < Cols; i++)
     if(playingField[1][i])
     {
+        Mix_PauseMusic();
+        Mix_PlayChannel(-1,GameOver,0);
         SDL_Rect Game_over;
         SetViTri(Game_over,SCREEN_WIDTH/4,SCREEN_HEIGHT/4,160,160);
         SDL_RenderCopy(gRenderer,go_img,NULL,&Game_over);
         SDL_RenderPresent(gRenderer);
-        Mix_PauseMusic();
-        Mix_PlayChannel(-1,GameOver,0);
         SDL_Delay(2000);
         Chay = false;
     }
     DiChuyen = 0;
     LatNguoc = false;
-    delay = 500;
+    delay = Delay_Max;
 }
-void XepGach :: setDiem( TextObject txt)
+void XepGach :: setDiem( TextObject& txt)
 {
-    std :: string val_str_mark;
-    std :: string strMark = "Your score: ";
-    val_str_mark = std :: to_string(mark_value);
-    strMark += val_str_mark;
-    txt.setText(strMark);
+    txt.setText("Your score: " + to_string(mark_value));
     txt.loadFromRenderText(ScoreFont,gRenderer);
     txt.RenderText(gRenderer,220,100);
 }

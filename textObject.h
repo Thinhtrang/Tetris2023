@@ -24,7 +24,7 @@ public:
                     SDL_RendererFlip flip = SDL_FLIP_NONE);
     int getWidth() const { return width_; }
     int getHeight() const { return height_; }
-    void setText(string& text) { str_val = text; }
+    void setText(const string& text) { str_val = text; }
     string GetText() { return str_val; }
 private:
     string str_val;

@@ -16,7 +16,7 @@ public:
     {
         return Chay;
     }
-    void setDiem(TextObject txt);
+    void setDiem(TextObject& txt);
     int Menu();
     void setTime(Uint32 time);
     bool check();
@@ -84,8 +84,10 @@ private:
     bool Chay = false;
     Uint32 StartTime = 0, currentTime = 0;
     int colorNum = 0;
-    int delay = 500;
+    int delay = Delay_Max;
+    int Delay_Max = 500;
     int n;
+    int i  = 1;
     int mark_value;
 };
 
